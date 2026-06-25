@@ -1,0 +1,145 @@
+[gd_scene load_steps=2 format=3 uid="uid://bagentcraftpanel01"]
+
+[ext_resource type="Script" path="res://scripts/interaction_panel.gd" id="1_ipanel"]
+
+[node name="InteractionPanel" type="Control"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("1_ipanel")
+
+[node name="Root" type="Panel" parent="."]
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 0
+grow_vertical = 0
+mouse_filter = 0
+
+[node name="Margin" type="MarginContainer" parent="Root"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBox" type="VBoxContainer" parent="Root/Margin"]
+layout_mode = 2
+
+[node name="HeaderRow" type="HBoxContainer" parent="Root/Margin/VBox"]
+layout_mode = 2
+
+[node name="TitleCol" type="VBoxContainer" parent="Root/Margin/VBox/HeaderRow"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Header" type="Label" parent="Root/Margin/VBox/HeaderRow/TitleCol"]
+layout_mode = 2
+text = "Agent"
+
+[node name="Persona" type="Label" parent="Root/Margin/VBox/HeaderRow/TitleCol"]
+layout_mode = 2
+text = ""
+
+[node name="Spacer" type="Control" parent="Root/Margin/VBox/HeaderRow"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="StatusPillWrap" type="Control" parent="Root/Margin/VBox/HeaderRow"]
+layout_mode = 2
+size_flags_vertical = 0
+mouse_filter = 2
+
+[node name="StatusPill" type="PanelContainer" parent="Root/Margin/VBox/HeaderRow/StatusPillWrap"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="Row" type="HBoxContainer" parent="Root/Margin/VBox/HeaderRow/StatusPillWrap/StatusPill"]
+layout_mode = 2
+
+[node name="Dot" type="Label" parent="Root/Margin/VBox/HeaderRow/StatusPillWrap/StatusPill/Row"]
+layout_mode = 2
+text = "●"
+
+[node name="StatusLabel" type="Label" parent="Root/Margin/VBox/HeaderRow/StatusPillWrap/StatusPill/Row"]
+layout_mode = 2
+text = "IDLE"
+
+[node name="CloseButton" type="Button" parent="Root/Margin/VBox/HeaderRow"]
+layout_mode = 2
+size_flags_vertical = 0
+text = "X"
+
+[node name="RepoLabel" type="Label" parent="Root/Margin/VBox"]
+layout_mode = 2
+text = "repo"
+
+[node name="Detail" type="Label" parent="Root/Margin/VBox"]
+layout_mode = 2
+text = ""
+
+[node name="Sep" type="HSeparator" parent="Root/Margin/VBox"]
+layout_mode = 2
+
+[node name="TranscriptScroll" type="ScrollContainer" parent="Root/Margin/VBox"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Transcript" type="RichTextLabel" parent="Root/Margin/VBox/TranscriptScroll"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+bbcode_enabled = true
+fit_content = true
+scroll_active = false
+text = ""
+
+[node name="DiffSection" type="VBoxContainer" parent="Root/Margin/VBox"]
+layout_mode = 2
+
+[node name="DiffHost" type="Control" parent="Root/Margin/VBox/DiffSection"]
+custom_minimum_size = Vector2(0, 170)
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="ActionsRow" type="HBoxContainer" parent="Root/Margin/VBox"]
+layout_mode = 2
+
+[node name="DiffButton" type="Button" parent="Root/Margin/VBox/ActionsRow"]
+layout_mode = 2
+text = "Diff"
+
+[node name="ApproveButton" type="Button" parent="Root/Margin/VBox/ActionsRow"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Approve"
+
+[node name="MergeButton" type="Button" parent="Root/Margin/VBox/ActionsRow"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Merge"
+
+[node name="InputRow" type="HBoxContainer" parent="Root/Margin/VBox"]
+layout_mode = 2
+
+[node name="PromptInput" type="LineEdit" parent="Root/Margin/VBox/InputRow"]
+layout_mode = 2
+size_flags_horizontal = 3
+placeholder_text = "Tell this agent what to do..."
+
+[node name="SendButton" type="Button" parent="Root/Margin/VBox/InputRow"]
+layout_mode = 2
+text = "Send"
+
+[node name="TalkButton" type="Button" parent="Root/Margin/VBox/InputRow"]
+layout_mode = 2
+text = "Talk"

@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>AgentCraft — Voice</title>
+    <style>
+      :root {
+        color-scheme: dark;
+        --bg: #0f1117;
+        --panel: #171a23;
+        --accent: #6c8cff;
+        --accent-hot: #ff5d5d;
+        --text: #e6e8ef;
+        --muted: #8a90a2;
+      }
+      * { box-sizing: border-box; }
+      body {
+        margin: 0;
+        font: 15px/1.5 system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+        background: var(--bg);
+        color: var(--text);
+        display: grid;
+        place-items: center;
+        min-height: 100vh;
+      }
+      .card {
+        width: min(440px, 92vw);
+        background: var(--panel);
+        border: 1px solid #232838;
+        border-radius: 16px;
+        padding: 22px;
+        box-shadow: 0 12px 40px rgba(0, 0, 0, 0.45);
+      }
+      h1 { font-size: 18px; margin: 0 0 4px; }
+      .sub { color: var(--muted); font-size: 13px; margin: 0 0 18px; }
+      label { display: block; font-size: 12px; color: var(--muted); margin: 12px 0 4px; }
+      select {
+        width: 100%;
+        padding: 9px 10px;
+        background: #0d0f16;
+        color: var(--text);
+        border: 1px solid #2a3043;
+        border-radius: 9px;
+      }
+      #talk {
+        width: 100%;
+        margin-top: 18px;
+        padding: 16px;
+        font-size: 16px;
+        font-weight: 600;
+        color: #fff;
+        background: var(--accent);
+        border: none;
+        border-radius: 12px;
+        cursor: pointer;
+        user-select: none;
+        touch-action: none; /* pointer events drive push-to-talk; no scroll hijack */
+        transition: background 0.12s ease, transform 0.06s ease;
+      }
+      #talk:active { transform: scale(0.99); }
+      #talk.talking { background: var(--accent-hot); }
+      .statusrow {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 14px;
+        font-size: 12px;
+        color: var(--muted);
+      }
+      #status { font-weight: 600; color: var(--text); }
+      #transcript {
+        margin-top: 14px;
+        height: 180px;
+        overflow-y: auto;
+        background: #0d0f16;
+        border: 1px solid #232838;
+        border-radius: 10px;
+        padding: 10px 12px;
+        font-size: 13px;
+      }
+      #transcript .line { padding: 2px 0; border-bottom: 1px solid #161a25; }
+      .hint { margin-top: 10px; font-size: 11px; color: var(--muted); }
+      kbd {
+        background: #0d0f16;
+        border: 1px solid #2a3043;
+        border-radius: 5px;
+        padding: 1px 5px;
+        font-size: 11px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="card">
+      <h1>AgentCraft — Voice</h1>
+      <p class="sub">Talk to a live coding agent. The voice you hear is the worker.</p>
+
+      <label for="character">Character</label>
+      <select id="character">
+        <option value="a1" data-label="Vinny" selected>Vinny — web</option>
+        <option value="a2" data-label="Merlin">Merlin — engine</option>
+        <option value="a3" data-label="Durin">Durin — templates</option>
+      </select>
+
+      <button id="talk">Hold to talk</button>
+
+      <div class="statusrow">
+        <span>status</span>
+        <span id="status">idle</span>
+      </div>
+
+      <div id="transcript"></div>
+
+      <p class="hint">
+        Hold the button or press <kbd>Space</kbd> to talk (push-to-talk kills echo on stage).
+      </p>
+    </div>
+
+    <!--
+      Config injection. The ElevenLabs API KEY is NEVER here.
+        - DEFAULT (private agent): leave agentId "" and let the local sidecar mint a signed URL
+          (GET /voice/signed-url; the sidecar holds ELEVENLABS_API_KEY + ELEVENLABS_AGENT_ID).
+        - PUBLIC agent: set agentId and the page connects directly (no key in the browser either way).
+      The agent must have a `run_task` client tool configured — see README.md.
+      sidecarToken (runtime/auth.token) is ONLY needed if you turn on relayEnabled; run_task is tokenless.
+    -->
+    <script>
+      window.AGENTCRAFT_VOICE_CONFIG = {
+        agentId: "", // "" => use the sidecar signed URL (recommended). Set to a public agent id to skip it.
+        signedUrlEndpoint: "http://127.0.0.1:8787/voice/signed-url",
+        sidecarHttp: "http://127.0.0.1:8787", // run_task / get_status target
+        sidecarWsUrl: "ws://127.0.0.1:8787/",
+        sidecarToken: "", // only for relayEnabled; paste runtime/auth.token if you use the relay
+        defaultCharacterId: "a1",
+        defaultCharacterLabel: "Vinny",
+        // Mirror caption/speaking to the sidecar so other viewers see the in-world tell. The spoken
+        // voice + real work work regardless of this flag; leave false for a single-machine demo.
+        relayEnabled: false,
+      };
+    </script>
+
+    <!--
+      @elevenlabs/client is loaded as an ESM module. In dev you can pull it from a CDN that serves
+      the package as ESM; in a bundled build, swap this for your local import. The client.js file
+      `import { Conversation } from "@elevenlabs/client"` resolves through this import map.
+    -->
+    <script type="importmap">
+      {
+        "imports": {
+          "@elevenlabs/client": "https://esm.sh/@elevenlabs/client@^0.1"
+        }
+      }
+    </script>
+    <script type="module" src="./client.js"></script>
+  </body>
+</html>

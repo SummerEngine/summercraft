@@ -1,0 +1,10 @@
+# Per-launch runtime artifacts (auth token, session JSON/JSONL, demo sandbox repos, boot logs, ops dir).
+# All machine-local and regenerated on boot — never commit.
+runtime/
+
+# Node deps (reinstall with npm install).
+node_modules/
+
+# Local secrets / config (Aiven URIs, tokens, Kafka creds). NEVER commit. See docs/AIVEN_SETUP.md.
+.env
+*.pem

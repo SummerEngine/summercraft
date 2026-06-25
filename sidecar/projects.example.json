@@ -1,0 +1,19 @@
+[
+  {
+    "id": "my-app",
+    "name": "My App",
+    "repo_path": "/Users/you/code/my-app",
+    "agents": [
+      { "agent_id": "a1", "label": "Vinny", "character_kind": "viking" }
+    ]
+  },
+  {
+    "id": "my-api",
+    "name": "My API",
+    "repo_path": "/Users/you/code/my-api",
+    "agents": [
+      { "agent_id": "a2", "label": "Merlin", "character_kind": "wizard" },
+      { "agent_id": "a3", "label": "Durin", "character_kind": "dwarf" }
+    ]
+  }
+]

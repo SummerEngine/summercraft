@@ -1,0 +1,223 @@
+[gd_scene format=3 uid="uid://bj1vfa52n06ys"]
+
+[ext_resource type="PackedScene" uid="uid://dhmq4yhhniv1" path="res://models/house.glb" id="3_sugp2"]
+[ext_resource type="Script" uid="uid://4t8h8jo34s85" path="res://scripts/base.gd" id="4_base"]
+[ext_resource type="Shader" uid="uid://cqg7lgrass8nd" path="res://shaders/grass_ground.gdshader" id="6_grass"]
+[ext_resource type="PackedScene" uid="uid://d06xw3licte8h" path="res://assets/models/kenney/fantasy-town-kit/tree-high-crooked.glb" id="8_7r4gi"]
+[ext_resource type="PackedScene" uid="uid://cv2kweqon3ae1" path="res://assets/models/kenney/platformer-kit/flowers.glb" id="10_q5onr"]
+[ext_resource type="Script" uid="uid://d0l7jcjomb88p" path="res://scripts/world_manager.gd" id="10_wmgr"]
+[ext_resource type="Shader" uid="uid://c5rtquibcp858" path="res://shaders/water_moat.gdshader" id="11_water"]
+[ext_resource type="PackedScene" uid="uid://c5gnm6xt1sw2g" path="res://assets/models/kenney/fantasy-town-kit/rock-small.glb" id="13_xo05s"]
+[ext_resource type="PackedScene" uid="uid://csdsokskr8fse" path="res://assets/models/kenney/fantasy-town-kit/rock-large.glb" id="14_dss4m"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_water"]
+render_priority = -1
+shader = ExtResource("11_water")
+shader_parameter/water_shallow = Color(0.3, 0.69, 0.88, 1)
+shader_parameter/water_deep = Color(0.1, 0.36, 0.66, 1)
+shader_parameter/foam_tint = Color(0.78, 0.94, 1, 1)
+shader_parameter/ripple_scale = 0.1
+shader_parameter/flow_speed = 0.18
+shader_parameter/sparkle = 0.35
+shader_parameter/island_half = 45.5
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_water"]
+size = Vector2(520, 520)
+
+[sub_resource type="StandardMaterial3D" id="Material_rim"]
+specular_mode = 1
+albedo_color = Color(0.42, 0.31, 0.2, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_rim"]
+size = Vector3(80, 2.4, 80)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_grass"]
+render_priority = 0
+shader = ExtResource("6_grass")
+shader_parameter/grass_light = Color(0.5, 0.82, 0.34, 1)
+shader_parameter/grass_dark = Color(0.27, 0.61, 0.24, 1)
+shader_parameter/grass_deep = Color(0.16, 0.43, 0.18, 1)
+shader_parameter/patch_scale = 0.06
+shader_parameter/speckle_scale = 1.6
+shader_parameter/diamond_scale = 0.35
+shader_parameter/diamond_strength = 0.035
+shader_parameter/edge_darken = 0.22
+shader_parameter/map_half_size = 38.0
+
+[sub_resource type="BoxMesh" id="BoxMesh_o5qli"]
+size = Vector3(76, 1.5, 76)
+
+[sub_resource type="ProceduralSkyMaterial" id="Sky_warm"]
+sky_top_color = Color(0.38, 0.6, 0.86, 1)
+sky_horizon_color = Color(0.78, 0.82, 0.83, 1)
+sky_curve = 0.18
+ground_bottom_color = Color(0.62, 0.71, 0.75, 1)
+ground_horizon_color = Color(0.79, 0.82, 0.82, 1)
+sun_angle_max = 45.0
+sun_curve = 0.12
+
+[sub_resource type="Sky" id="Sky_0wfyh"]
+sky_material = SubResource("Sky_warm")
+
+[sub_resource type="Environment" id="Environment_0wfyh"]
+background_mode = 2
+sky = SubResource("Sky_0wfyh")
+ambient_light_source = 3
+ambient_light_color = Color(0.86, 0.83, 0.78, 1)
+ambient_light_sky_contribution = 0.6
+ambient_light_energy = 0.55
+tonemap_mode = 3
+tonemap_exposure = 1.05
+tonemap_white = 6.0
+glow_enabled = true
+glow_intensity = 0.45
+glow_strength = 0.95
+glow_bloom = 0.05
+glow_hdr_threshold = 1.15
+fog_light_color = Color(0.82, 0.85, 0.9, 1)
+fog_sun_scatter = 0.12
+fog_density = 0.0032
+fog_sky_affect = 0.0
+adjustment_enabled = true
+adjustment_brightness = 1.02
+adjustment_contrast = 1.04
+adjustment_saturation = 1.12
+
+[sub_resource type="StandardMaterial3D" id="Material_puff"]
+transparency = 1
+shading_mode = 0
+albedo_color = Color(0.95, 0.95, 0.95, 0.6)
+disable_receive_shadows = true
+billboard_mode = 3
+billboard_keep_scale = true
+particles_anim_h_frames = 1
+particles_anim_v_frames = 1
+particles_anim_loop = false
+
+[sub_resource type="QuadMesh" id="QuadMesh_puff"]
+size = Vector2(2, 2)
+
+[node name="Main" type="Node3D" unique_id=489116300]
+
+[node name="WaterMoat" type="MeshInstance3D" parent="." unique_id=900100001]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.022563934, -1.3201176, -0.0028877258)
+material_override = SubResource("ShaderMaterial_water")
+mesh = SubResource("PlaneMesh_water")
+
+[node name="IslandRim" type="MeshInstance3D" parent="." unique_id=900100002]
+transform = Transform3D(0.70710677, 0, 0.70710677, 0, 1, 0, -0.70710677, 0, 0.70710677, 0, -1.3, 0)
+material_override = SubResource("Material_rim")
+mesh = SubResource("BoxMesh_rim")
+
+[node name="GrassP" type="MeshInstance3D" parent="." unique_id=144655181]
+transform = Transform3D(0.70710677, 0, 0.70710677, 0, 1, 0, -0.70710677, 0, 0.70710677, 0.014076233, -0.7500038, -0.04232979)
+material_override = SubResource("ShaderMaterial_grass")
+mesh = SubResource("BoxMesh_o5qli")
+
+[node name="Sun" type="DirectionalLight3D" parent="." unique_id=468930290]
+transform = Transform3D(0.81915206, 0.30075407, -0.48907843, 0, 0.85217, 0.52324164, 0.57357645, -0.42864335, 0.69804, 0, 0, 0)
+light_color = Color(1, 0.93, 0.79, 1)
+light_energy = 1.35
+shadow_enabled = true
+shadow_bias = 0.04
+shadow_normal_bias = 1.5
+shadow_blur = 1.6
+directional_shadow_split_1 = 0.08
+directional_shadow_max_distance = 130.0
+
+[node name="FillLight" type="DirectionalLight3D" parent="." unique_id=900100003]
+transform = Transform3D(-0.86602545, 0.17101006, -0.46984628, 0, 0.9396926, 0.34202012, 0.5, 0.29619816, -0.81379765, 0, 0, 0)
+light_color = Color(0.7, 0.81, 0.95, 1)
+light_energy = 0.28
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1991704155]
+environment = SubResource("Environment_0wfyh")
+
+[node name="Camera3D" type="Camera3D" parent="." unique_id=2013933591]
+transform = Transform3D(-0.7071068, 0.5, -0.5, 0, 0.70710677, 0.70710677, 0.7071068, 0.5, -0.5, -47.16, 62.03, -47.16)
+current = true
+fov = 40.0
+
+[node name="House" parent="." unique_id=541013152 instance=ExtResource("3_sugp2")]
+transform = Transform3D(5.656854, 0, 5.656854, 0, 8, 0, -5.656854, 0, 5.656854, -14, 0, -14)
+script = ExtResource("4_base")
+
+[node name="House2" parent="." unique_id=1896717185 instance=ExtResource("3_sugp2")]
+transform = Transform3D(-5.656854, 0, -5.656854, 0, 8, 0, 5.656854, 0, -5.656854, 14, 0, 14)
+script = ExtResource("4_base")
+team = 1
+
+[node name="ChimneyPuffA" type="CPUParticles3D" parent="." unique_id=900100011]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -14, 6.5, -14)
+material_override = SubResource("Material_puff")
+amount = 10
+lifetime = 4.5
+preprocess = 3.0
+randomness = 0.6
+mesh = SubResource("QuadMesh_puff")
+emission_shape = 1
+emission_sphere_radius = 0.4
+direction = Vector3(0.1, 1, 0)
+spread = 12.0
+gravity = Vector3(0.15, 0.9, 0.05)
+initial_velocity_min = 0.3
+initial_velocity_max = 0.7
+scale_amount_min = 0.5
+scale_amount_max = 1.2
+
+[node name="ChimneyPuffB" type="CPUParticles3D" parent="." unique_id=900100012]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14, 6.5, 14)
+material_override = SubResource("Material_puff")
+amount = 10
+lifetime = 4.5
+preprocess = 3.0
+randomness = 0.6
+mesh = SubResource("QuadMesh_puff")
+emission_shape = 1
+emission_sphere_radius = 0.4
+direction = Vector3(-0.1, 1, 0)
+spread = 12.0
+gravity = Vector3(-0.15, 0.9, 0.05)
+initial_velocity_min = 0.3
+initial_velocity_max = 0.7
+scale_amount_min = 0.5
+scale_amount_max = 1.2
+
+[node name="WorldManager" type="Node" parent="." unique_id=1917424125]
+script = ExtResource("10_wmgr")
+
+[node name="Tree2" parent="." unique_id=12771784 instance=ExtResource("8_7r4gi")]
+transform = Transform3D(1.9, 0, 0, 0, 1.9, 0, 0, 0, 1.9, 25.272953, 0, -13.69182)
+
+[node name="Tree2" parent="Tree2" unique_id=1963161487 instance=ExtResource("8_7r4gi")]
+transform = Transform3D(1.9, 0, 0, 0, 1.9, 0, 0, 0, 1.9, 1.6764793, 0, -0.2657609)
+
+[node name="Tree2" parent="Tree2/Tree2" unique_id=1793816815 instance=ExtResource("8_7r4gi")]
+transform = Transform3D(1.9, 0, 0, 0, 1.9, 0, 0, 0, 1.9, -20.558739, 0, 3.5974495)
+
+[node name="Tree3" parent="." unique_id=101295635 instance=ExtResource("8_7r4gi")]
+transform = Transform3D(1.9, 0, 0, 0, 1.9, 0, 0, 0, 1.9, -38.101524, 0, 3.483261)
+
+[node name="Tree4" parent="." unique_id=1575733271 instance=ExtResource("8_7r4gi")]
+transform = Transform3D(1.9, 0, 0, 0, 1.9, 0, 0, 0, 1.9, 30.298939, 0, -16.52185)
+
+[node name="Tree5" parent="." unique_id=2071673263 instance=ExtResource("8_7r4gi")]
+transform = Transform3D(1.9, 0, 0, 0, 1.9, 0, 0, 0, 1.9, 41.593315, 0, -0.77607346)
+
+[node name="Tree6" parent="." unique_id=2095768841 instance=ExtResource("8_7r4gi")]
+transform = Transform3D(1.9, 0, 0, 0, 1.9, 0, 0, 0, 1.9, -40.71422, 0, -2.058465)
+
+[node name="TreeA" parent="." unique_id=653469431 instance=ExtResource("8_7r4gi")]
+transform = Transform3D(1.9, 0, 0, 0, 1.9, 0, 0, 0, 1.9, 1, 0, 40)
+
+[node name="TreeB" parent="." unique_id=673496856 instance=ExtResource("8_7r4gi")]
+transform = Transform3D(1.9, 0, 0, 0, 1.9, 0, 0, 0, 1.9, 22, 0, -18)
+
+[node name="FlowersA" parent="." unique_id=1032869572 instance=ExtResource("10_q5onr")]
+transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, 0.649971, 0, 34.776222)
+
+[node name="RockA" parent="." unique_id=1515146698 instance=ExtResource("14_dss4m")]
+transform = Transform3D(1.4, 0, 0, 0, 1.4, 0, 0, 0, 1.4, 4.5565453, 0, -37.956398)
+
+[node name="RockB" parent="." unique_id=332814289 instance=ExtResource("13_xo05s")]
+transform = Transform3D(1.1, 0, 0, 0, 1.1, 0, 0, 0, 1.1, -0.56267166, 0, -45.722843)

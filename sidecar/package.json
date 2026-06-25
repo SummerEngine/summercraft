@@ -1,0 +1,36 @@
+{
+  "name": "agentcraft-sidecar",
+  "version": "0.1.0",
+  "type": "module",
+  "private": true,
+  "engines": {
+    "node": ">=20.12"
+  },
+  "scripts": {
+    "start": "tsx server.ts",
+    "sidecar": "tsx server.ts",
+    "dev": "tsx watch server.ts",
+    "test": "npm run test:unit && npm run test:integration && npm run test:aiven-smoke",
+    "test:unit": "node --import tsx --test \"test/*.test.ts\"",
+    "test:integration": "node test/integration.mjs",
+    "test:aiven-smoke": "tsx aiven-smoke.ts",
+    "test:kafka-smoke": "tsx kafka-smoke.ts",
+    "test:multiplayer-smoke": "tsx multiplayer-smoke.ts",
+    "mcp:local": "node mcp-aiven-local.mjs",
+    "test:mcp-smoke": "node mcp-smoke.mjs",
+    "billing-check": "node billing-check.mjs",
+    "demo": "bash demo.sh"
+  },
+  "dependencies": {
+    "@anthropic-ai/claude-agent-sdk": "latest",
+    "@modelcontextprotocol/sdk": "^1.29.0",
+    "kafkajs": "^2.2.4",
+    "pg": "^8.13.0",
+    "ws": "^8.18.0",
+    "zod": "^4.4.3"
+  },
+  "devDependencies": {
+    "tsx": "^4.19.0",
+    "typescript": "^5.6.0"
+  }
+}

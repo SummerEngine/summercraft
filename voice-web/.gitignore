@@ -1,0 +1,6 @@
+# Never commit secrets. The ElevenLabs key lives in env (or a local file here), never in the repo.
+.env
+.env.*
+*.local
+agent.json
+.agent-id

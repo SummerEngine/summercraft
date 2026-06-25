@@ -1,0 +1,14 @@
+-- DEPRECATED — the schema now lives in versioned migrations under sidecar/aiven/migrations/.
+--
+-- The sidecar no longer applies this file. On boot, aiven/pg.ts -> applySchema() delegates to the
+-- versioned migration runner (aiven/migrations.ts), which applies aiven/migrations/NNNN_*.sql in order
+-- and records each in world_state.schema_migrations so a migration runs exactly once.
+--
+-- Source of truth for the baseline coordination schema: aiven/migrations/0001_init.sql.
+-- The operation audit log:                              aiven/migrations/0002_operations_audit.sql.
+--
+-- To apply by hand against a fresh DB (the runner does this automatically on boot):
+--   psql "$AIVEN_PG_URI" -f sidecar/aiven/migrations/0001_init.sql
+--   psql "$AIVEN_PG_URI" -f sidecar/aiven/migrations/0002_operations_audit.sql
+--
+-- Do NOT add schema here — add a new aiven/migrations/NNNN_name.sql instead.

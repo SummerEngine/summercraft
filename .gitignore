@@ -1,0 +1,20 @@
+# Godot 4 import cache & editor-generated data (regenerated from the source assets)
+.godot/
+
+# Machine-specific Summer Engine local config
+.summer/local/
+
+# Backups / OS / editor cruft
+project.godot.bak
+*.tmp
+.DS_Store
+
+# Node deps for the tools/*.js asset scripts (reinstall with npm install)
+node_modules/
+
+# Stray raw model download — already extracted under models/dwarf/
+Meshy_AI_Flying_Dwarf_biped.zip
+
+# Agent runtime state + isolated git worktrees (generated at run time)
+runtime/
+.agentcraft-worktrees/
